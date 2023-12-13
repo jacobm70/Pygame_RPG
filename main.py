@@ -5,8 +5,6 @@ import sys
 from Ground import Ground
 from Player import Player
 
-# test git push
-# tes git pull
 
 # begin pygame
 pygame.init()

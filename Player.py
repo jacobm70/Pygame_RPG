@@ -3,12 +3,14 @@ from pygame.locals import *
 
 vec = pygame.math.Vector2
 
-animation_right = [pygame.image.load("Images/Player.png"),
+animation_right = [pygame.image.load("Images/Player_Right.png"),
                    pygame.image.load("Images/Player_RW2.png"),
                    pygame.image.load("Images/Player_RW3.png"),
                    pygame.image.load("Images/Player_RW4.png"),
                    pygame.image.load("Images/Player_RW5.png"),
                    pygame.image.load("Images/Player_RW6.png"),
+                   pygame.image.load("Images/Player_RW7.png"),
+                   pygame.image.load("Images/Player_RW8.png"),
                    pygame.image.load("Images/Player_end.png"),
                    ]
 
@@ -18,6 +20,8 @@ animation_left = [pygame.image.load("Images/Player_Left.png"),
                   pygame.image.load("Images/Player_LW4.png"),
                   pygame.image.load("Images/Player_LW5.png"),
                   pygame.image.load("Images/Player_LW6.png"),
+                  pygame.image.load("Images/Player_LW7.png"),
+                  pygame.image.load("Images/Player_LW8.png"),
                   pygame.image.load("Images/Player_endL.png"),
                   ]
 
@@ -25,7 +29,7 @@ animation_left = [pygame.image.load("Images/Player_Left.png"),
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.image.load("Images/Player.png")
+        self.image = pygame.image.load("Images/Player_Right.png")
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
 
@@ -66,7 +70,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = self.pos
 
     def walking(self):
-        if self.move_frame > 6:
+        if self.move_frame > 8:
             self.move_frame = 0
             return
 
