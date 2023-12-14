@@ -3,7 +3,7 @@ from pygame.locals import *
 
 vec = pygame.math.Vector2
 
-animation_right = [pygame.image.load("Images/Player_Right.png"),
+Walk_right = [pygame.image.load("Images/Player_Right.png"),
                    pygame.image.load("Images/Player_RW2.png"),
                    pygame.image.load("Images/Player_RW3.png"),
                    pygame.image.load("Images/Player_RW4.png"),
@@ -11,10 +11,12 @@ animation_right = [pygame.image.load("Images/Player_Right.png"),
                    pygame.image.load("Images/Player_RW6.png"),
                    pygame.image.load("Images/Player_RW7.png"),
                    pygame.image.load("Images/Player_RW8.png"),
+                   pygame.image.load("Images/Player_RW9.png"),
+                   pygame.image.load("Images/Player_RW10.png"),
                    pygame.image.load("Images/Player_end.png"),
                    ]
 
-animation_left = [pygame.image.load("Images/Player_Left.png"),
+Walk_left = [pygame.image.load("Images/Player_Left.png"),
                   pygame.image.load("Images/Player_LW2.png"),
                   pygame.image.load("Images/Player_LW3.png"),
                   pygame.image.load("Images/Player_LW4.png"),
@@ -22,16 +24,21 @@ animation_left = [pygame.image.load("Images/Player_Left.png"),
                   pygame.image.load("Images/Player_LW6.png"),
                   pygame.image.load("Images/Player_LW7.png"),
                   pygame.image.load("Images/Player_LW8.png"),
+                  pygame.image.load("Images/Player_LW9.png"),
+                  pygame.image.load("Images/Player_LW10.png"),
                   pygame.image.load("Images/Player_endL.png"),
                   ]
 
+Attack_right =
+
+
+Attack_left =
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.image.load("Images/Player_Right.png")
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
+        self.rect = pygame.Rect(x, y, 35, 54)
 
         # Player Info
         self.pos = vec(x, y)
@@ -47,6 +54,11 @@ class Player(pygame.sprite.Sprite):
         self.running = False
         self.direction = "RIGHT"
         self.move_frame = 0
+
+        # Player Attacking
+        self.attacking = False
+        self.attack_frame = 0
+        self.attack_counter = 0
 
     def move(self):
         self.acc = vec(0, 0.5)
@@ -70,7 +82,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = self.pos
 
     def walking(self):
-        if self.move_frame > 8:
+        if self.move_frame > 10:
             self.move_frame = 0
             return
 
@@ -89,6 +101,9 @@ class Player(pygame.sprite.Sprite):
                 self.image = animation_right[self.move_frame]
             elif self.direction == "LEFT":
                 self.image = animation_left[self.move_frame]
+
+    def attack(self):
+        pass
 
     def update(self, group):
         self.walking()
@@ -114,4 +129,6 @@ class Player(pygame.sprite.Sprite):
             self.vel.y = -7
 
     def render(self, display):
+        pygame.draw.rect(display, (255, 0, 0), self.rect)
         display.blit(self.image, self.pos)
+
