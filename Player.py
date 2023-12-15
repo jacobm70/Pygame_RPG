@@ -29,10 +29,15 @@ Walk_left = [pygame.image.load("Images/Player_Left.png"),
                   pygame.image.load("Images/Player_endL.png"),
                   ]
 
-Attack_right =
+Attack_right = [pygame.image.load("Images/Player_Right.png"),
+                pygame.image.load("Images/Player_AR.png")
+                ]
+
+Attack_left = [pygame.image.load("Images/Player_Left.png"),
+               pygame.image.load("Images/Player_AL.png")
+               ]
 
 
-Attack_left =
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -88,24 +93,35 @@ class Player(pygame.sprite.Sprite):
 
         if self.jumping == False and self.running == True:
             if self.vel.x >= 0:
-                self.image = animation_right[self.move_frame]
+                self.image = Walk_right[self.move_frame]
                 self.direction = "RIGHT"
             elif self.vel.x < 0:
-                self.image = animation_left[self.move_frame]
+                self.image = Walk_left[self.move_frame]
                 self.direction = "LEFT"
             self.move_frame += 1
 
         if self.running == False and self.move_frame != 0:
             self.move_frame = 0
             if self.direction == "RIGHT":
-                self.image = animation_right[self.move_frame]
+                self.image = Walk_right[self.move_frame]
             elif self.direction == "LEFT":
-                self.image = animation_left[self.move_frame]
+                self.image = Walk_left[self.move_frame]
 
     def attack(self):
-        pass
+
+        if self.attack_frame > 1:
+            self.attack_frame = 0
+            return
+
+        if self.direction == "RIGHT":
+            self.image = Attack_right[self.attack_frame]
+        elif self.direction == "LEFT":
+            self.image = Attack_left[self.attack_frame]
+
+        self.attack_frame += 1
 
     def update(self, group):
+        self.attack()
         self.walking()
         self.move()
         self.collision(group)
