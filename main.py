@@ -2,11 +2,12 @@ import pygame
 from pygame.locals import *
 import sys
 
+
 from Ground import Ground
 from Player import Player
 
 
-# begin pygame
+# Begin Pygame
 pygame.init()
 
 
@@ -24,10 +25,13 @@ background = pygame.image.load("Images/background.png")
 ground = Ground(600, 300, 0, 250, "Images/Ground.png")
 player = Player(200, 150)
 
+
 GroundGroup = pygame.sprite.Group()
 GroundGroup.add(ground)
 
+
 while True:
+
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
