@@ -3,7 +3,7 @@ from pygame.locals import *
 
 vec = pygame.math.Vector2
 
-Walk_right = [pygame.image.load("Images/Player_Right.png"),
+animation_right = [pygame.image.load("Images/Player_Right.png"),
               pygame.image.load("Images/Player_RW2.png"),
               pygame.image.load("Images/Player_RW3.png"),
               pygame.image.load("Images/Player_RW4.png"),
@@ -16,7 +16,7 @@ Walk_right = [pygame.image.load("Images/Player_Right.png"),
               pygame.image.load("Images/Player_end.png"),
               ]
 
-Walk_left = [pygame.image.load("Images/Player_Left.png"),
+animation_left = [pygame.image.load("Images/Player_Left.png"),
              pygame.image.load("Images/Player_LW2.png"),
              pygame.image.load("Images/Player_LW3.png"),
              pygame.image.load("Images/Player_LW4.png"),
@@ -29,12 +29,16 @@ Walk_left = [pygame.image.load("Images/Player_Left.png"),
              pygame.image.load("Images/Player_endL.png"),
              ]
 
-Attack_right = [pygame.image.load("Images/Player_Right.png"),
-                pygame.image.load("Images/Player_AR.png")
+attack_right = [pygame.image.load("Images/Player_Right.png"),
+                pygame.image.load("Images/Player_AR.png"),
+                pygame.image.load("Images/Player_AR2.png"),
+                pygame.image.load("Images/Player_Right.png")
                 ]
 
-Attack_left = [pygame.image.load("Images/Player_Left.png"),
-               pygame.image.load("Images/Player_AL.png")
+attack_left = [pygame.image.load("Images/Player_Left.png"),
+               pygame.image.load("Images/Player_AL.png"),
+               pygame.image.load("Images/Player_AL2.png"),
+               pygame.image.load("Images/Player_Left.png")
                ]
 
 
@@ -94,19 +98,19 @@ class Player(pygame.sprite.Sprite):
 
         if self.jumping == False and self.running == True:
             if self.vel.x >= 0:
-                self.image = Walk_right[self.move_frame]
+                self.image = animation_right[self.move_frame]
                 self.direction = "RIGHT"
             elif self.vel.x < 0:
-                self.image = Walk_left[self.move_frame]
+                self.image = animation_left[self.move_frame]
                 self.direction = "LEFT"
             self.move_frame += 1
 
         if self.running == False and self.move_frame != 0:
             self.move_frame = 0
             if self.direction == "RIGHT":
-                self.image = Walk_right[self.move_frame]
+                self.image = animation_right[self.move_frame]
             elif self.direction == "LEFT":
-                self.image = Walk_left[self.move_frame]
+                self.image = animation_left[self.move_frame]
 
     def attack(self):
         if self.attacking == True:
@@ -115,22 +119,21 @@ class Player(pygame.sprite.Sprite):
             elif self.direction == "LEFT":
                 self.attack_range = pygame.Rect(self.pos.x, self.pos.y, 13, self.rect.height)
 
-
-            if self.attack_frame > 1:
+            if self.attack_frame > 3:
                 self.attack_frame = 0
                 self.attacking = False
                 self.attack_range = pygame.Rect(0, 0, 0, 0)
                 return
 
-        if self.direction == "RIGHT":
-            self.image = Attack_right[self.attack_frame]
-        elif self.direction == "LEFT":
-            self.image = Attack_left[self.attack_frame]
+            if self.direction == "RIGHT":
+                self.image = attack_right[self.attack_frame]
+            elif self.direction == "LEFT":
+                self.image = attack_left[self.attack_frame]
 
-        self.attack_counter += 1
-        if self.attack_counter >= 3:
-            self.attack_frame += 1
-            self.attack_frame += 1
+            self.attack_counter += 1
+            if self.attack_counter >= 4:
+                self.attack_frame += 1
+
 
     def update(self, group):
         self.attack()
