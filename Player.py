@@ -32,12 +32,20 @@ animation_left = [pygame.image.load("Images/Player_Left.png"),
 attack_right = [pygame.image.load("Images/Player_Right.png"),
                 pygame.image.load("Images/Player_AR.png"),
                 pygame.image.load("Images/Player_AR2.png"),
+                pygame.image.load("Images/Player_AR3.png"),
+                pygame.image.load("Images/Player_AR4.png"),
+                pygame.image.load("Images/Player_AR4.png"),
+                pygame.image.load("Images/Player_AR4.png"),
                 pygame.image.load("Images/Player_Right.png")
                 ]
 
 attack_left = [pygame.image.load("Images/Player_Left.png"),
                pygame.image.load("Images/Player_AL.png"),
                pygame.image.load("Images/Player_AL2.png"),
+               pygame.image.load("Images/Player_AL3.png"),
+               pygame.image.load("Images/Player_AL4.png"),
+               pygame.image.load("Images/Player_AL4.png"),
+               pygame.image.load("Images/Player_AL4.png"),
                pygame.image.load("Images/Player_Left.png")
                ]
 
@@ -119,7 +127,7 @@ class Player(pygame.sprite.Sprite):
             elif self.direction == "LEFT":
                 self.attack_range = pygame.Rect(self.pos.x, self.pos.y, 13, self.rect.height)
 
-            if self.attack_frame > 3:
+            if self.attack_frame > 7:
                 self.attack_frame = 0
                 self.attacking = False
                 self.attack_range = pygame.Rect(0, 0, 0, 0)
@@ -152,7 +160,7 @@ class Player(pygame.sprite.Sprite):
                     self.pos.y = lowest.rect.top - self.rect.height
                     self.rect.y = lowest.rect.top - self.rect.height
                     self.vel.y = 0
-                    self.jumping = False
+
 
     def jump(self):
         if self.jumping == False:
