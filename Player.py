@@ -142,7 +142,6 @@ class Player(pygame.sprite.Sprite):
             if self.attack_counter >= 4:
                 self.attack_frame += 1
 
-
     def update(self, group):
         self.attack()
         self.walking()
