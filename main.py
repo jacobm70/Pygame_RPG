@@ -57,9 +57,8 @@ while 1:
                 player.attack()
 
     # Update Functions
-    E1.move()
-    E1.collision(GroundGroup)
-    E1.player_collision(player)
+    for enemy in EnemyGroup:
+        enemy.update(GroundGroup, player)
     player.update(GroundGroup)
     UI.update()
 

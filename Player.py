@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-
+from HealthBar import HealthBar
 vec = pygame.math.Vector2
 
 
@@ -16,6 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.pos = vec(x, y)
         self.acc = vec(0, 0)
         self.vel = vec(0, 0)
+        self.healthbar = HealthBar(100, 40)
 
         # Player Constants
         self.ACC = 0.2
@@ -130,6 +131,7 @@ class Player(pygame.sprite.Sprite):
         # pygame.draw.rect(display, (255, 0, 0), self.rect)
         # pygame.draw.rect(display, (0, 255, 0), self.attack_range)
         display.blit(self.image, self.pos)
+        self.healthbar.render(display)
 
     def load_animations(self):
         self.animation_right = [pygame.image.load("Images/Player_Right.png").convert_alpha(),
