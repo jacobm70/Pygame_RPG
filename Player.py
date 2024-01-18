@@ -1,9 +1,8 @@
 import pygame
 from pygame.locals import *
 from HealthBar import HealthBar
+
 vec = pygame.math.Vector2
-
-
 
 
 class Player(pygame.sprite.Sprite):
@@ -16,11 +15,11 @@ class Player(pygame.sprite.Sprite):
         self.pos = vec(x, y)
         self.acc = vec(0, 0)
         self.vel = vec(0, 0)
-        self.healthbar = HealthBar(100, 40)
+        self.healthbar = HealthBar(240, 0)
 
         # Player Constants
-        self.ACC = 0.2
-        self.FRIC = -0.1
+        self.ACC = 0.5
+        self.FRIC = -0.2
 
         # Player Movements
         self.jumping = False
@@ -33,6 +32,10 @@ class Player(pygame.sprite.Sprite):
         self.attack_frame = 0
         self.attack_counter = 0
         self.attack_range = pygame.Rect(0, 0, 0, 0)
+        self.hit_cooldown = False
+
+        #Player Events
+        self.hit_cooldown_event = pygame.USEREVENT + 1
 
     def move(self):
         self.acc = vec(0, 0.5)
@@ -109,6 +112,16 @@ class Player(pygame.sprite.Sprite):
         self.move()
         self.attack()
         self.collision(group)
+
+    def player_hit(self, damage):
+        if self.hit_cooldown == False:
+            self.hit_cooldown = True
+            self.healthbar.takeDamage(damage)
+            pygame.time.set_timer(self.hit_cooldown_event, 1000)
+
+
+
+
 
     def collision(self, group):
         hits = pygame.sprite.spritecollide(self, group, False)

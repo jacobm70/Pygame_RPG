@@ -45,6 +45,10 @@ while 1:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == player.hit_cooldown_event:
+            player.hit_cooldown = True
+            pygame.time.set_timer(player.hit_cooldown_event, 0)
+            print("Cooldown off")
 
         if event.type == MOUSEBUTTONDOWN:
             pass
