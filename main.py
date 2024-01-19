@@ -31,6 +31,8 @@ player.load_animations()
 E1 = Enemy()
 UI = UserInterface()
 
+Items = pygame.sprite.Group()
+
 EnemyGroup = pygame.sprite.Group()
 EnemyGroup.add(E1)
 
@@ -54,7 +56,7 @@ while 1:
             pass
 
         if event.type == KEYDOWN:
-            if event.key == K_UP:
+            if event.key == K_PLUS:
                 player.jump()
             if event.key == K_z:
                 player.attacking = True
@@ -62,7 +64,7 @@ while 1:
 
     # Update Functions
     for enemy in EnemyGroup:
-        enemy.update(GroundGroup, player)
+        enemy.update(GroundGroup, player, Items)
     player.update(GroundGroup)
     UI.update()
 
@@ -77,6 +79,8 @@ while 1:
 
     for enemy in EnemyGroup:
         enemy.render(display)
+    for item in Items:
+        item.render(display)
 
     pygame.display.update()
     CLOCK.tick(FPS)

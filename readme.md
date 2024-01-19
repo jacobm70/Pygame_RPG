@@ -1,1 +1,3 @@
-USE THE DOWNLOAD FOR HELP
+                                Controls
+                        Arrow keys - Left or Right
+                                 Z - Punch
