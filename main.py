@@ -33,6 +33,8 @@ UI = UserInterface()
 
 Items = pygame.sprite.Group()
 
+enemy_generation = pygame.USEREVENT + 2
+
 EnemyGroup = pygame.sprite.Group()
 EnemyGroup.add(E1)
 
@@ -47,10 +49,15 @@ while 1:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+
         if event.type == player.hit_cooldown_event:
             player.hit_cooldown = True
             pygame.time.set_timer(player.hit_cooldown_event, 0)
-            print("Cooldown off")
+
+        if event.type == enemy_generation:
+            enemy = Enemy()
+            EnemyGroup.add(enemy)
+
 
         if event.type == MOUSEBUTTONDOWN:
             pass
@@ -61,6 +68,10 @@ while 1:
             if event.key == K_z:
                 player.attacking = True
                 player.attack()
+            if event.key == K_q:
+                pygame.time.set_timer(enemy_generation, 2000)
+            if event.key == K_w:
+                pygame.time.set_timer(enemy_generation, 0)
 
     # Update Functions
     for enemy in EnemyGroup:
@@ -71,7 +82,7 @@ while 1:
     player.move()
     player.collision(GroundGroup)
 
-    # Render Functions
+    # Render Functionsz
     display.blit(background, (0, 0))
     ground.render(display)
     player.render(display)
@@ -81,6 +92,7 @@ while 1:
         enemy.render(display)
     for item in Items:
         item.render(display)
+
 
     pygame.display.update()
     CLOCK.tick(FPS)
