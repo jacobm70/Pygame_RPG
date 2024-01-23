@@ -4,10 +4,10 @@ import sys
 
 
 from Ground import Ground
-from Player import Player
 from Enemy import Enemy
+from Player import Player
 from UserInterface import UserInterface
-
+from LeverManager import LevelManager
 
 # Begin Pygame
 pygame.init()
@@ -24,7 +24,7 @@ pygame.display.set_caption("Pygame RPG")
 
 background = pygame.image.load("Images/background.png")
 
-ground = Ground(600, 300, 0, 250, "Images/Ground.png")
+
 player = Player(200, 150)
 player.load_animations()
 
@@ -33,14 +33,14 @@ UI = UserInterface()
 
 Items = pygame.sprite.Group()
 
-enemy_generation = pygame.USEREVENT + 2
+levelManager = LevelManager()
 
-EnemyGroup = pygame.sprite.Group()
+
+
 EnemyGroup.add(E1)
 
 
-GroundGroup = pygame.sprite.Group()
-GroundGroup.add(ground)
+
 
 
 while 1:
@@ -54,9 +54,9 @@ while 1:
             player.hit_cooldown = True
             pygame.time.set_timer(player.hit_cooldown_event, 0)
 
-        if event.type == enemy_generation:
+        if event.type == levelManager.enemy_generation:
             enemy = Enemy()
-            EnemyGroup.add(enemy)
+            levelManager.EnemyGroup.add(enemy)
 
 
         if event.type == MOUSEBUTTONDOWN:
@@ -69,14 +69,17 @@ while 1:
                 player.attacking = True
                 player.attack()
             if event.key == K_q:
-                pygame.time.set_timer(enemy_generation, 2000)
+                pygame.time.set_timer(levelManager.enemy_generation, 2000)
             if event.key == K_w:
-                pygame.time.set_timer(enemy_generation, 0)
-
+                pygame.time.set_timer(levelManager.enemy_generation, 0)
+            if event.key == K_1:
+                level.Manager.changeLevel(0)
+            if event.key == K_2:
+                level.Manager.changeLevel(1)
     # Update Functions
-    for enemy in EnemyGroup:
-        enemy.update(GroundGroup, player, Items)
-    player.update(GroundGroup)
+    for enemy in levelManager.enemyGroup:
+        enemy.update(levelManager.levels[levelManager.getLevel()].groundData, player, Items)
+    player.update(levelManager.levels[levelManager.getLevel()].groundData)
     UI.update()
 
     player.move()
@@ -85,13 +88,16 @@ while 1:
     # Render Functionsz
     display.blit(background, (0, 0))
     ground.render(display)
+    for item in Items:
+        item.render(display)
+        item.update(player)
+
     player.render(display)
     UI.render(display)
 
-    for enemy in EnemyGroup:
+    for enemy in levelManager.enemyGroup:
         enemy.render(display)
-    for item in Items:
-        item.render(display)
+
 
 
     pygame.display.update()
